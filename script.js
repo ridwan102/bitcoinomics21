@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAnimations();
     initializeMobileMenu();
     initializeParallax();
+    initializeGetStartedButton();
 });
 
 // Navigation functionality
@@ -52,6 +53,73 @@ function initializeNavigation() {
         });
     });
 }
+
+// Get Started button functionality
+function initializeGetStartedButton() {
+    const getStartedButton = document.querySelector('.btn-primary');
+    
+    if (getStartedButton && getStartedButton.textContent.trim() === 'Get Started') {
+        getStartedButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Find the features section with "Unify your crypto finances"
+            const featuresSection = document.querySelector('.features');
+            if (featuresSection) {
+                featuresSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    }
+}
+
+// Global function for onclick attribute
+function scrollToFeatures() {
+    const featuresSection = document.querySelector('.features');
+    if (featuresSection) {
+        smoothScrollTo(featuresSection.offsetTop, 1500);
+    }
+}
+
+// Ensure external links open in new tabs
+document.addEventListener('DOMContentLoaded', function() {
+    const externalLinks = document.querySelectorAll('a[href^="http"]');
+    externalLinks.forEach(link => {
+        if (!link.hasAttribute('target')) {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+        }
+    });
+});
+
+// Custom smooth scrolling function with easing
+function smoothScrollTo(targetPosition, duration = 1500) {
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const run = easeInOutCubic(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    requestAnimationFrame(animation);
+}
+
+// Easing function for smooth animation
+function easeInOutCubic(t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t * t + b;
+    t -= 2;
+    return c / 2 * (t * t * t + 2) + b;
+}
+
+// Make function globally accessible
+window.scrollToFeatures = scrollToFeatures;
 
 // Mobile menu functionality
 function initializeMobileMenu() {
