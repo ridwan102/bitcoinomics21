@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeMobileMenu();
     initializeParallax();
     initializeGetStartedButton();
+    
+    // Initialize live Bitcoin price
+    updateBitcoinPrice();
+    
+    // Update price every 309 seconds
+    setInterval(updateBitcoinPrice, 300000);
 });
 
 // Navigation functionality
@@ -79,6 +85,38 @@ function scrollToFeatures() {
     const featuresSection = document.querySelector('.features');
     if (featuresSection) {
         smoothScrollTo(featuresSection.offsetTop, 1500);
+    }
+}
+
+// Fetch live Bitcoin price and update balance
+async function updateBitcoinPrice() {
+    try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await response.json();
+        
+        if (data.bitcoin && data.bitcoin.usd) {
+            const bitcoinPrice = data.bitcoin.usd;
+            const balanceElement = document.querySelector('.balance');
+            
+            if (balanceElement) {
+                // Format the price with commas and 2 decimal places
+                const formattedPrice = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(bitcoinPrice);
+                
+                balanceElement.textContent = formattedPrice;
+            }
+        }
+    } catch (error) {
+        console.log('Error fetching Bitcoin price:', error);
+        // Fallback to static price if API fails
+        const balanceElement = document.querySelector('.balance');
+        if (balanceElement) {
+            balanceElement.textContent = 'Loading...';
+        }
     }
 }
 
