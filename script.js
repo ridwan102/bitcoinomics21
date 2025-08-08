@@ -31,10 +31,10 @@ function initializeNavigation() {
         const currentScrollY = window.scrollY;
         
         if (currentScrollY > 100) {
-            header.style.background = 'linear-gradient(145deg, #888888, #1a1a1a)';
+            header.style.background = 'linear-gradient(145deg, #1a1a1a, #888888)';
             header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
         } else {
-            header.style.background = 'linear-gradient(145deg, #888888, #1a1a1a)';
+            header.style.background = 'linear-gradient(145deg, #1a1a1a, #888888)';
             header.style.boxShadow = 'none';
         }
 
