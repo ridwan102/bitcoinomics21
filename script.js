@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize all interactive features
     initializeNavigation();
     initializeScrollEffects();
-    initializeProcessSteps();
+    initializeMilestonesSteps();
     initializeExchangeWidget();
     initializeContactForm();
     initializeAnimations();
@@ -213,6 +213,42 @@ function initializeMobileMenu() {
             }
         });
 
+        // Handle nav menu item clicks
+        const navItems = navMenu.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const href = item.getAttribute('href');
+                let targetSection = null;
+                
+                // Map href to actual section
+                switch(href) {
+                    case '#features':
+                        targetSection = document.querySelector('.features');
+                        break;
+                    case '#contact-section':
+                        targetSection = document.querySelector('.contact-section');
+                        break;
+                    case '#milestones':
+                        targetSection = document.querySelector('.milestones');
+                        break;
+                    case '#exchange-section':
+                        targetSection = document.querySelector('.exchange-section');
+                        break;
+                }
+                
+                if (targetSection) {
+                    smoothScrollTo(targetSection.offsetTop, 1500);
+                    
+                    // Close mobile menu after clicking
+                    navMenu.classList.remove('mobile-open');
+                    mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    body.style.overflow = '';
+                }
+            });
+        });
+
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!mobileToggle.contains(e.target) && !navMenu.contains(e.target)) {
@@ -254,8 +290,8 @@ function initializeScrollEffects() {
     });
 }
 
-// Process steps interaction
-function initializeProcessSteps() {
+// Milestones steps interaction
+function initializeMilestonesSteps() {
     const steps = document.querySelectorAll('.step');
     const restartBtn = document.querySelector('.btn-restart');
     let currentStep = 0;
@@ -306,10 +342,10 @@ function initializeProcessSteps() {
     }
 
     // Pause on hover
-    const processSection = document.querySelector('.process');
-    if (processSection) {
-        processSection.addEventListener('mouseenter', stopAutoProgress);
-        processSection.addEventListener('mouseleave', startAutoProgress);
+    const milestonesSection = document.querySelector('.milestones');
+    if (milestonesSection) {
+        milestonesSection.addEventListener('mouseenter', stopAutoProgress);
+        milestonesSection.addEventListener('mouseleave', startAutoProgress);
     }
 }
 

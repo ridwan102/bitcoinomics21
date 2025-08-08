@@ -557,28 +557,28 @@ h3 {
     line-height: 1.6;
 }
 
-/* Process Section */
-.process {
+/* milestones Section */
+.milestones {
     padding: 80px 0;
     background: white;
 }
 
-.process-header {
+.milestones-header {
     text-align: center;
     margin-bottom: 5rem;
 }
 
-.process-header h2 {
+.milestones-header h2 {
     color: #000000;
     margin-bottom: 1rem;
 }
 
-.process-header p {
+.milestones-header p {
     color: #000000;
     font-size: 1.1rem;
 }
 
-.process-steps {
+.milestones-steps {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -587,7 +587,7 @@ h3 {
     position: relative;
 }
 
-.process-steps::before {
+.milestones-steps::before {
     content: '';
     position: absolute;
     top: 30px;
@@ -1125,6 +1125,10 @@ h3 {
 }
 
 /* Mobile Menu Styles */
+.nav-menu {
+    display: none;
+}
+
 .nav-menu.mobile-open {
     display: flex;
     flex-direction: column;
@@ -1137,6 +1141,34 @@ h3 {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     z-index: 999;
     gap: 1.5rem;
+}
+
+.nav-menu .nav-item {
+    background: linear-gradient(145deg, #FE8A01, #ff9500);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(254, 138, 1, 0.3);
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-menu .nav-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(254, 138, 1, 0.4);
+    background: linear-gradient(145deg, #ff9500, #FE8A01);
+}
+
+.nav-menu .nav-item:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(254, 138, 1, 0.3);
 }
 
 .nav-menu.mobile-open .dropdown-content {
@@ -1188,13 +1220,13 @@ h3 {
         gap: 1.5rem;
     }
     
-    .process-steps {
+    .milestones-steps {
         flex-direction: column;
         gap: 1.5rem;
         align-items: center;
     }
     
-    .process-steps::before {
+    .milestones-steps::before {
         display: none;
     }
     
@@ -1315,7 +1347,7 @@ h3 {
 /* Smooth scrolling and performance */
 .hero,
 .features,
-.process,
+.milestones,
 .bitcoin-card-section,
 .exchange,
 .testimonials,
