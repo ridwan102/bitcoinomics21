@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update price every 309 seconds
     setInterval(updateBitcoinPrice, 300000);
+    
+    // Buy button click handler
+    initializeBuyButton();
 });
 
 // Navigation functionality
@@ -28,10 +31,10 @@ function initializeNavigation() {
         const currentScrollY = window.scrollY;
         
         if (currentScrollY > 100) {
-            header.style.background = '#1a1a1a';
+            header.style.background = 'linear-gradient(145deg, #888888, #1a1a1a)';
             header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
         } else {
-            header.style.background = '#1a1a1a';
+            header.style.background = 'linear-gradient(145deg, #888888, #1a1a1a)';
             header.style.boxShadow = 'none';
         }
 
@@ -71,10 +74,23 @@ function initializeGetStartedButton() {
             // Find the features section with "Unify your crypto finances"
             const featuresSection = document.querySelector('.features');
             if (featuresSection) {
-                featuresSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                smoothScrollTo(featuresSection.offsetTop, 1500);
+            }
+        });
+    }
+}
+
+// Buy button functionality
+function initializeBuyButton() {
+    const buyButton = document.querySelector('.buy-btn');
+    
+    if (buyButton) {
+        buyButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const exchangeSection = document.querySelector('.exchange-section');
+            if (exchangeSection) {
+                smoothScrollTo(exchangeSection.offsetTop, 1500);
             }
         });
     }
@@ -91,15 +107,33 @@ function scrollToFeatures() {
 // Fetch live Bitcoin price and update balance
 async function updateBitcoinPrice() {
     try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-        const data = await response.json();
+        // Try multiple API endpoints for better reliability
+        const apis = [
+            'https://api.coinbase.com/v2/exchange-rates?currency=BTC'
+        ];
         
-        if (data.bitcoin && data.bitcoin.usd) {
-            const bitcoinPrice = data.bitcoin.usd;
+        let bitcoinPrice = null;
+        
+        for (const apiUrl of apis) {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                // Handle Coinbase API response
+                if (apiUrl.includes('coinbase') && data.data && data.data.rates && data.data.rates.USD) {
+                    bitcoinPrice = parseFloat(data.data.rates.USD);
+                    break;
+                }
+            } catch (apiError) {
+                console.log(`Failed to fetch from ${apiUrl}:`, apiError);
+                continue;
+            }
+        }
+        
+        if (bitcoinPrice) {
             const balanceElement = document.querySelector('.balance');
             
             if (balanceElement) {
-                // Format the price with commas and 2 decimal places
                 const formattedPrice = new Intl.NumberFormat('en-US', {
                     style: 'currency',
                     currency: 'USD',
@@ -107,16 +141,15 @@ async function updateBitcoinPrice() {
                     maximumFractionDigits: 0
                 }).format(bitcoinPrice);
                 
-                balanceElement.textContent = formattedPrice;
+                balanceElement.textContent = `1 BTC = ${formattedPrice}`;
             }
+        } else {
+            console.log('Failed to fetch Bitcoin price from all APIs');
         }
+        
     } catch (error) {
         console.log('Error fetching Bitcoin price:', error);
-        // Fallback to static price if API fails
-        const balanceElement = document.querySelector('.balance');
-        if (balanceElement) {
-            balanceElement.textContent = 'Loading...';
-        }
+        // Keep the previous price displayed instead of showing "Loading..."
     }
 }
 
