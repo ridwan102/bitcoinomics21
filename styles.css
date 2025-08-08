@@ -1179,6 +1179,10 @@ h3 {
         transform: none;
     }
     
+    .balance {
+        font-size: 1.8rem;
+    }
+    
     .features-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -1187,10 +1191,16 @@ h3 {
     .process-steps {
         flex-direction: column;
         gap: 1.5rem;
+        align-items: center;
     }
     
     .process-steps::before {
         display: none;
+    }
+    
+    .step {
+        width: 100%;
+        max-width: 300px;
     }
     
     .card-content {
