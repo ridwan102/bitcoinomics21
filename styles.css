@@ -499,7 +499,6 @@ h3 {
 .feature-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #FE8A01, #ff9500);
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -527,7 +526,7 @@ h3 {
 
 .process-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
 }
 
 .process-header h2 {
@@ -884,6 +883,16 @@ h3 {
 .cta h2 {
     font-size: 3rem;
     margin-bottom: 1rem;
+}
+
+.cta h2 a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.cta h2 a:hover {
+    color: #FE8A01;
 }
 
 .cta p {
