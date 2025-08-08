@@ -1124,11 +1124,43 @@ h3 {
     flex: 1;
 }
 
-/* Mobile Menu Styles */
+/* Navigation Menu Styles */
 .nav-menu {
-    display: none;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }
 
+.nav-menu .nav-item {
+    background: linear-gradient(145deg, #FE8A01, #ff9500);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 20px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(254, 138, 1, 0.3);
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.nav-menu .nav-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(254, 138, 1, 0.4);
+    background: linear-gradient(145deg, #ff9500, #FE8A01);
+}
+
+.nav-menu .nav-item:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(254, 138, 1, 0.3);
+}
+
+/* Mobile Menu Styles */
 .nav-menu.mobile-open {
     display: flex;
     flex-direction: column;
@@ -1143,32 +1175,9 @@ h3 {
     gap: 1.5rem;
 }
 
-.nav-menu .nav-item {
-    background: linear-gradient(145deg, #FE8A01, #ff9500);
-    color: white;
+.nav-menu.mobile-open .nav-item {
     padding: 15px 30px;
-    border-radius: 25px;
-    text-decoration: none;
-    text-align: center;
-    font-weight: 600;
     font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(254, 138, 1, 0.3);
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.nav-menu .nav-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(254, 138, 1, 0.4);
-    background: linear-gradient(145deg, #ff9500, #FE8A01);
-}
-
-.nav-menu .nav-item:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 15px rgba(254, 138, 1, 0.3);
 }
 
 .nav-menu.mobile-open .dropdown-content {
@@ -1183,7 +1192,7 @@ h3 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .nav-menu {
+    .nav-menu:not(.mobile-open) {
         display: none;
     }
     
