@@ -1201,6 +1201,13 @@ h3 {
     .step {
         width: 100%;
         max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .step-number {
+        margin: 0 auto 1rem;
     }
     
     .card-content {
