@@ -140,6 +140,10 @@ h3 {
 .logo {
     height: 40px;
     width: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .nav-menu {
@@ -1303,6 +1307,12 @@ h3 {
     
     .container {
         padding: 0 1rem;
+    }
+    
+    .logo {
+        height: 36px;
+        image-rendering: auto;
+        -webkit-font-smoothing: subpixel-antialiased;
     }
 }
 
