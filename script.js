@@ -199,7 +199,11 @@ function initializeMobileMenu() {
     const body = document.body;
 
     if (mobileToggle && navMenu) {
-        mobileToggle.addEventListener('click', () => {
+        // Function to toggle menu
+        function toggleMenu(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
             const isOpen = navMenu.classList.contains('mobile-open');
             
             if (isOpen) {
@@ -211,7 +215,14 @@ function initializeMobileMenu() {
                 mobileToggle.innerHTML = '<i class="fas fa-times"></i>';
                 body.style.overflow = 'hidden';
             }
-        });
+        }
+        
+        // Add multiple event listeners for better touch support
+        mobileToggle.addEventListener('click', toggleMenu);
+        mobileToggle.addEventListener('touchstart', toggleMenu, { passive: false });
+        mobileToggle.addEventListener('touchend', function(e) {
+            e.preventDefault();
+        }, { passive: false });
 
         // Handle nav menu item clicks
         const navItems = navMenu.querySelectorAll('.nav-item');
@@ -250,11 +261,25 @@ function initializeMobileMenu() {
         });
 
         // Close menu when clicking outside
+        function closeMenu() {
+            navMenu.classList.remove('mobile-open');
+            mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            body.style.overflow = '';
+        }
+        
         document.addEventListener('click', (e) => {
-            if (!mobileToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                navMenu.classList.remove('mobile-open');
-                mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                body.style.overflow = '';
+            if (navMenu.classList.contains('mobile-open') && 
+                !mobileToggle.contains(e.target) && 
+                !navMenu.contains(e.target)) {
+                closeMenu();
+            }
+        });
+        
+        document.addEventListener('touchstart', (e) => {
+            if (navMenu.classList.contains('mobile-open') && 
+                !mobileToggle.contains(e.target) && 
+                !navMenu.contains(e.target)) {
+                closeMenu();
             }
         });
     }
